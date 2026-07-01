@@ -5,15 +5,15 @@ class Pair {
     int distance;
     int node;
 
-    Pair(int d, int n) {
-        distance = d;
-        node = n;
+    Pair(int distance, int node) {
+        this.distance = distance;
+        this.node = node;
     }
 }
 
 class Solution {
 
-    public List<Integer> shortestPath(int n, int m, int edges[][]) {
+    public List<Integer> shortestPath(int n, int m, int[][] edges) {
 
         ArrayList<ArrayList<Pair>> adj = new ArrayList<>();
 
@@ -39,7 +39,7 @@ class Solution {
         int[] parent = new int[n + 1];
 
         for (int i = 1; i <= n; i++) {
-            dist[i] = (int) 1e9;
+            dist[i] = (int)1e9;
             parent[i] = i;
         }
 
@@ -48,30 +48,30 @@ class Solution {
 
         while (!pq.isEmpty()) {
 
-            Pair it = pq.poll();
+            Pair curr = pq.poll();
 
-            int node = it.node;
-            int dis = it.distance;
+            int dis = curr.distance;
+            int node = curr.node;
 
-            for (Pair iter : adj.get(node)) {
+            for (Pair it : adj.get(node)) {
 
-                int adjNode = iter.node;
-                int edgeWeight = iter.distance;
+                int adjNode = it.node;
+                int edgeWeight = it.distance;
 
                 if (dis + edgeWeight < dist[adjNode]) {
 
                     dist[adjNode] = dis + edgeWeight;
 
-                    pq.add(new Pair(dist[adjNode], adjNode));
-
                     parent[adjNode] = node;
+
+                    pq.add(new Pair(dist[adjNode], adjNode));
                 }
             }
         }
 
         List<Integer> path = new ArrayList<>();
 
-        if (dist[n] == (int) 1e9) {
+        if (dist[n] == (int)1e9) {
             path.add(-1);
             return path;
         }
@@ -86,6 +86,9 @@ class Solution {
         path.add(1);
 
         Collections.reverse(path);
+
+        // Add total distance at the beginning
+        path.add(0, dist[n]);
 
         return path;
     }
