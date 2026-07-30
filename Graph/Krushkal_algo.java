@@ -54,7 +54,7 @@ class Solution {
     public int spanningTree(int V, int[][] edges) {
         
         List<Edge> edgeList = new ArrayList<>();
-        
+        // M + E
         for(int [] edge : edges){
             int u =edge[0];
             int v = edge[1];
@@ -62,13 +62,13 @@ class Solution {
             
             edgeList.add(new Edge(wt,u,v));
         }
-        
+        //M logM
         Collections.sort(edgeList,(a,b) -> a.wt-b.wt);
         
         DisjointSet ds = new DisjointSet(V);
         
         int mstWeight =0;
-        
+        // M * 4 * alpha
         for(Edge it: edgeList){
             int wt = it.wt;
             int u = it.u;
